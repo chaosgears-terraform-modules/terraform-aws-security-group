@@ -13,23 +13,23 @@ variable "create" {
 //}
 
 variable "core_region" {
-  type = "string"
+  type = string
   description = "AWS core region"
 }
 
 variable "region" {
-  type = "string"
+  type = string
   description = "AWS region"
   default = "eu-central-1"
 }
 
 variable "remote_state_bucket" {
-  type = "string"
+  type = string
   description = "Remote state bucket name"
 }
 
 variable "network_remote_state_key" {
-  type = "string"
+  type = string
   description = "Network component remote state key"
   default = "network/terraform.tfstate"
 }
