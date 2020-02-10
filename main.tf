@@ -12,6 +12,10 @@ data "terraform_remote_state" "network" {
   }
 }
 
+locals {
+  vpc_id = data.terraform_remote_state.network.vpc_id
+}
+
 ##################################
 # Get ID of created Security Group
 ##################################
@@ -31,7 +35,7 @@ resource "aws_security_group" "this" {
 
   name        = var.name
   description = var.description
-  vpc_id      = var.vpc_id
+  vpc_id      = localvpc_id
 
   tags = merge(
     var.tags,
@@ -49,7 +53,7 @@ resource "aws_security_group" "this_name_prefix" {
 
   name_prefix = "${var.name}-"
   description = var.description
-  vpc_id      = var.vpc_id
+  vpc_id      = local.vpc_id
 
   tags = merge(
     var.tags,
