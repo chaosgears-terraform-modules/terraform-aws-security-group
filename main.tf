@@ -2,6 +2,16 @@ terraform {
   backend "s3" {}
 }
 
+data "terraform_remote_state" "network" {
+  backend = "s3"
+
+  config {
+    bucket = var.remote_state_bucket
+    key = var.region/var.network_remote_state_key
+    region = var.core_region
+  }
+}
+
 ##################################
 # Get ID of created Security Group
 ##################################
