@@ -35,7 +35,7 @@ resource "aws_security_group" "this" {
 
   name        = var.name
   description = var.description
-  vpc_id      = localvpc_id
+  vpc_id      = local.vpc_id
 
   tags = merge(
     var.tags,
