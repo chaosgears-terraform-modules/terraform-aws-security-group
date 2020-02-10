@@ -5,7 +5,7 @@ terraform {
 data "terraform_remote_state" "network" {
   backend = "s3"
 
-  config {
+  config = {
     bucket = var.remote_state_bucket
     key = var.region/var.network_remote_state_key
     region = var.core_region
@@ -13,7 +13,7 @@ data "terraform_remote_state" "network" {
 }
 
 locals {
-  vpc_id = data.terraform_remote_state.network.vpc_id
+  vpc_id = data.terraform_remote_state.network.outputs.vpc_id
 }
 
 ##################################
