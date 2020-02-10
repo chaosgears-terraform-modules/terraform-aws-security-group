@@ -7,7 +7,7 @@ data "terraform_remote_state" "network" {
 
   config = {
     bucket = var.remote_state_bucket
-    key = "%s/%s".format(var.region,var.network_remote_state_key)
+    key = format("%s/%s", var.region, var.network_remote_state_key)
     region = var.core_region
   }
 }
