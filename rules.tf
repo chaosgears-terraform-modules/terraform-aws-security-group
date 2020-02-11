@@ -137,6 +137,9 @@ variable "rules" {
     all-udp       = [0, 65535, "udp", "All UDP ports"]
     all-icmp      = [-1, -1, "icmp", "All IPV4 ICMP"]
     all-ipv6-icmp = [-1, -1, 58, "All IPV6 ICMP"]
+    #passus tests
+    passus-2055   = [2055, 2055, "udp", "Custom UDP Rule"]
+    passus-12055  = [12055, 12055, "udp", "Custom UDP Rule"]
     # This is a fallback rule to pass to lookup() as default. It does not open anything, because it should never be used.
     _ = ["", "", ""]
   }
