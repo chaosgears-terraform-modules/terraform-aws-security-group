@@ -92,13 +92,14 @@ resource "aws_security_group_rule" "dynamic_ingress_rules" {
   //  protocol  = var.rules[var.ingress_rules[count.index]][2]
 
   dynamic "dynamic_ingress_rules" {
+    iterator = rule
     for_each = var.dynamic_ingress_rules
     content {
-        cidr_blocks = [dynamic_ingress_rules.value.ingress_cidr_block]
-        from_port = var.rules[dynamic_ingress_rules.value.ingress_rules][0]
-        to_port   = var.rules[dynamic_ingress_rules.value.ingress_rules][1]
-        protocol  = var.rules[dynamic_ingress_rules.value.ingress_rules][2]
-        description = var.rules[dynamic_ingress_rules.value.ingress_rules][3]
+        cidr_blocks = [rule.value.ingress_cidr_block]
+        from_port = var.rules[rule.value.ingress_rules][0]
+        to_port   = var.rules[rule.value.ingress_rules][1]
+        protocol  = var.rules[rule.value.ingress_rules][2]
+        description = var.rules[rule.value.ingress_rules][3]
     }
   }
 }
