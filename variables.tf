@@ -118,6 +118,12 @@ variable "dynamic_ingress_rules" {
   default     = []
 }
 
+variable "dynamic_egress_rules" {
+  description = "List of egress rules to create by name"
+  type        = list(map(string))
+  default     = []
+}
+
 
 ###################
 # Computed Ingress
