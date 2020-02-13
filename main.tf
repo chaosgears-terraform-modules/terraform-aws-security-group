@@ -23,6 +23,20 @@ resource "aws_security_group" "this" {
   description = var.description
   vpc_id      = var.vpc_id
 
+
+  dynamic "ingress" {
+    iterator = rule
+    for_each = var.dynamic_ingress_rules
+    content {
+      cidr_blocks = [rule.value.ingress_cidr_block]
+      from_port = var.rules[rule.value.ingress_rules][0]
+      to_port   = var.rules[rule.value.ingress_rules][1]
+      protocol  = var.rules[rule.value.ingress_rules][2]
+      description = var.rules[rule.value.ingress_rules][3]
+    }
+  }
+
+
   tags = merge(
     var.tags,
     {
@@ -30,6 +44,7 @@ resource "aws_security_group" "this" {
     },
   )
 }
+
 
 #################################
 # Security group with name_prefix
@@ -72,38 +87,6 @@ resource "aws_security_group_rule" "ingress_rules" {
   to_port   = var.rules[var.ingress_rules[count.index]][1]
   protocol  = var.rules[var.ingress_rules[count.index]][2]
 }
-#####################################
-# Ingress - List of rules (dynamic)
-#####################################
-# Security group rules with "cidr_blocks" and it uses dynamic maps between rules and cidr_blocks
-resource "aws_security_group_rule" "dynamic_ingress_rules" {
-  count = var.create ? length(var.dynamic_ingress_rules) : 0
-
-  security_group_id = local.this_sg_id
-  type              = "ingress"
-
-  #cidr_blocks      = var.ingress_cidr_blocks
-  ipv6_cidr_blocks = var.ingress_ipv6_cidr_blocks
-  prefix_list_ids  = var.ingress_prefix_list_ids
-  //  description      = var.rules[var.ingress_rules[count.index]][3]
-
-  //  from_port = var.rules[var.ingress_rules[count.index]][0]
-  //  to_port   = var.rules[var.ingress_rules[count.index]][1]
-  //  protocol  = var.rules[var.ingress_rules[count.index]][2]
-
-  dynamic "dynamic_ingress_rules" {
-    iterator = rule
-    for_each = var.dynamic_ingress_rules
-    content {
-        cidr_blocks = [rule.value.ingress_cidr_block]
-        from_port = var.rules[rule.value.ingress_rules][0]
-        to_port   = var.rules[rule.value.ingress_rules][1]
-        protocol  = var.rules[rule.value.ingress_rules][2]
-        description = var.rules[rule.value.ingress_rules][3]
-    }
-  }
-}
-
 
 # Computed - Security group rules with "cidr_blocks" and it uses list of rules names
 resource "aws_security_group_rule" "computed_ingress_rules" {
