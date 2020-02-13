@@ -58,19 +58,38 @@ resource "aws_security_group" "this_name_prefix" {
 ###################################
 # Security group rules with "cidr_blocks" and it uses list of rules names
 resource "aws_security_group_rule" "ingress_rules" {
-  count = var.create ? length(var.ingress_rules) : 0
+  count = var.create ? length(var.dynamic_ingress_rules) : 0
 
   security_group_id = local.this_sg_id
-  type              = "ingress"
+  type = "ingress"
 
-  cidr_blocks      = var.ingress_cidr_blocks
-  ipv6_cidr_blocks = var.ingress_ipv6_cidr_blocks
-  prefix_list_ids  = var.ingress_prefix_list_ids
-  description      = var.rules[var.ingress_rules[count.index]][3]
+  prefix_list_ids = var.ingress_prefix_list_ids
 
-  from_port = var.rules[var.ingress_rules[count.index]][0]
-  to_port   = var.rules[var.ingress_rules[count.index]][1]
-  protocol  = var.rules[var.ingress_rules[count.index]][2]
+  dynamic "dynamic_ingress_rules" {
+    for_each = var.dynamic_ingress_rules
+    content {
+
+      cidr_blocks = dynamic_ingress_rules.value.ingress_cidr_block
+      ipv6_cidr_blocks = var.ingress_ipv6_cidr_blocks
+
+      description = var.rules[dynamic_ingress_rules.value.ingress_rules][3]
+      from_port = var.rules[dynamic_ingress_rules.value.ingress_rules][0]
+      to_port = var.rules[dynamic_ingress_rules.value.ingress_rules][1]
+      protocol = var.rules[dynamic_ingress_rules.value.ingress_rules][2]
+
+      //security_group_id = local.this_sg_id
+      //type = "ingress"
+
+      #cidr_blocks = var.ingress_cidr_blocks
+      #ipv6_cidr_blocks = var.ingress_ipv6_cidr_blocks
+      #prefix_list_ids = var.ingress_prefix_list_ids
+
+      #description = var.rules[var.ingress_rules[count.index]][3]
+      #from_port = var.rules[var.ingress_rules[count.index]][0]
+      #to_port = var.rules[var.ingress_rules[count.index]][1]
+      #protocol = var.rules[var.ingress_rules[count.index]][2]
+    }
+  }
 }
 
 # Computed - Security group rules with "cidr_blocks" and it uses list of rules names
