@@ -28,11 +28,11 @@ resource "aws_security_group" "this" {
     iterator = rule
     for_each = var.dynamic_ingress_rules
     content {
-      cidr_blocks = [rule.value.ingress_cidr_block]
-      from_port = var.rules[rule.value.ingress_rules][0]
-      to_port   = var.rules[rule.value.ingress_rules][1]
-      protocol  = var.rules[rule.value.ingress_rules][2]
-      description = var.rules[rule.value.ingress_rules][3]
+      cidr_blocks = [rule.value["ingress_cidr_block"]]
+      from_port = var.rules[rule.value["ingress_rules"]][0]
+      to_port   = var.rules[rule.value["ingress_rules"]][1]
+      protocol  = var.rules[rule.value["ingress_rules"]][2]
+      description = var.rules[rule.value["ingress_rules"]][3]
     }
   }
 
