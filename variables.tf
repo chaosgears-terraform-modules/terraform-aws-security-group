@@ -108,6 +108,16 @@ variable "ingress_prefix_list_ids" {
   type        = list(string)
   default     = []
 }
+###################
+# Dynamic Ingress
+###################
+
+variable "dynamic_ingress_rules" {
+  description = "List of ingress rules to create by name"
+  type        = list(map(string))
+  default     = []
+}
+
 
 ###################
 # Computed Ingress
