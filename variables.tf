@@ -61,11 +61,11 @@ variable "tags" {
 ##########
 # Ingress
 ##########
-//variable "ingress_rules" {
-//  description = "List of ingress rules to create by name"
-//  type        = list(string)
-//  default     = []
-//}
+variable "ingress_rules" {
+  description = "List of ingress rules to create by name"
+  type        = list(string)
+  default     = []
+}
 
 variable "ingress_with_self" {
   description = "List of ingress rules to create where 'self' is defined"
@@ -91,11 +91,11 @@ variable "ingress_with_source_security_group_id" {
   default     = []
 }
 
-//variable "ingress_cidr_blocks" {
-//  description = "List of IPv4 CIDR ranges to use on all ingress rules"
-//  type        = list(string)
-//  default     = []
-//}
+variable "ingress_cidr_blocks" {
+  description = "List of IPv4 CIDR ranges to use on all ingress rules"
+  type        = list(string)
+  default     = []
+}
 
 variable "ingress_ipv6_cidr_blocks" {
   description = "List of IPv6 CIDR ranges to use on all ingress rules"
@@ -108,13 +108,6 @@ variable "ingress_prefix_list_ids" {
   type        = list(string)
   default     = []
 }
-
-variable "dynamic_ingress_rules" {
-  description = "Customize security_groups for adding more than once"
-  type        = list(map(string))
-  default     = []
-}
-
 
 ###################
 # Computed Ingress
