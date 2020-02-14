@@ -12,29 +12,6 @@ variable "vpc_id" {
   type        = string
 }
 
-//variable "core_region" {
-//  type = string
-//  description = "AWS core region"
-//}
-//
-//variable "region" {
-//  type = string
-//  description = "AWS region"
-//  default = "eu-central-1"
-//}
-//
-//variable "remote_state_bucket" {
-//  type = string
-//  description = "Remote state bucket name"
-//}
-//
-//variable "network_remote_state_key" {
-//  type = string
-//  description = "Network component remote state key"
-//  default = "network/terraform.tfstate"
-//}
-
-
 variable "name" {
   description = "Name of security group"
   type        = string
