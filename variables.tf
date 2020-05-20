@@ -1,6 +1,11 @@
 #################
 # Security group
 #################
+variable "region" {
+  type = string
+  description = "Region name"
+}
+
 variable "create" {
   description = "Whether to create security group and all rules"
   type        = bool
